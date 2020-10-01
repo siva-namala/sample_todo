@@ -3,21 +3,25 @@
 </head>
 
 <body>
-    <h1>Welcome</h1>
-    <form method="post" action="/">
-        {% csrf_token %}
-        {{ form.title }}
-        <input type="submit" name="Create Task">
-    </form>
+    <div >
+        <form method="post" action="/">
+            {% csrf_token %}
+            {{ form.title }}
+            <input type="submit" name="Create Task">
+        </form>
 
-    {% for task in tasks %}
+        {% for task in tasks %}
         <div>
             <a href="{% url 'tasks:update_task' task.id %}">Update</a>
-            <p>{{ task.title }} | {{ task.created }} | {{ task.complete }}</p>
+            <a href="{% url 'tasks:delete_task' task.id %}">Delete</a>
+            {% if task.complete == True %}
+                <strike>{{ task.title }}</strike>
+            {% else %}
+                <span>{{ task.title }}</span>
+            {% endif %}
         </div>
-    {% endfor %}
-
-
+        {% endfor %}
+    </div>
 </body>
 
 
